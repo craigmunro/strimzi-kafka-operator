@@ -95,7 +95,7 @@ public class Resources {
     private List<Runnable> resources = new ArrayList<>();
 
     private <T extends HasMetadata> T deleteLater(MixedOperation<T, ?, ?, ?> x, T resource) {
-        LOGGER.info("Deleting {} {}", resource.getKind(), resource.getMetadata().getName());
+        LOGGER.info("Waiting for deleting {} {}", resource.getKind(), resource.getMetadata().getName());
         switch (resource.getKind()) {
             case Kafka.RESOURCE_KIND:
                 resources.add(() -> {
