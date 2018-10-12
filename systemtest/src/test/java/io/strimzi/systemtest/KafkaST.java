@@ -73,7 +73,6 @@ import static io.strimzi.test.TestUtils.indent;
 import static io.strimzi.test.TestUtils.map;
 import static io.strimzi.test.TestUtils.toYamlString;
 import static io.strimzi.test.TestUtils.waitFor;
-//import static junit.framework.TestCase.assertTrue;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.not;
@@ -83,6 +82,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.valid4j.matchers.jsonpath.JsonPathMatchers.hasJsonPath;
+import static io.strimzi.test.StrimziExtension.REGRESSION;
+import static io.strimzi.test.StrimziExtension.ACCEPTANCE;
 
 @ExtendWith(StrimziExtension.class)
 @Namespace(KafkaST.NAMESPACE)
@@ -102,7 +103,7 @@ class KafkaST extends AbstractST {
     private Random rng = new Random();
 
     @Test
-    @Tag("regression")
+    @Tag(REGRESSION)
     @OpenShiftOnly
     @Resources(value = "../examples/templates/cluster-operator", asAdmin = true)
     void testDeployKafkaClusterViaTemplate() {
@@ -121,7 +122,7 @@ class KafkaST extends AbstractST {
     }
 
     @Test
-    @Tag("acceptance")
+    @Tag(ACCEPTANCE)
     void testKafkaAndZookeeperScaleUpScaleDown() {
         operationID = startTimeMeasuring();
         resources().kafkaEphemeral(CLUSTER_NAME, 3).done();
@@ -181,7 +182,7 @@ class KafkaST extends AbstractST {
     }
 
     @Test
-    @Tag("regression")
+    @Tag(REGRESSION)
     void testZookeeperScaleUpScaleDown() {
         operationID = startTimeMeasuring();
         resources().kafkaEphemeral(CLUSTER_NAME, 3).done();
@@ -243,7 +244,7 @@ class KafkaST extends AbstractST {
     }
 
     @Test
-    @Tag("regression")
+    @Tag(REGRESSION)
     void testCustomAndUpdatedValues() {
         Map<String, Object> kafkaConfig = new HashMap<>();
         kafkaConfig.put("offsets.topic.replication.factor", "1");
@@ -357,7 +358,7 @@ class KafkaST extends AbstractST {
      * Test sending messages over plain transport, without auth
      */
     @Test
-    @Tag("acceptance")
+    @Tag(ACCEPTANCE)
     void testSendMessagesPlainAnonymous() throws InterruptedException {
         String name = "send-messages-plain-anon";
         int messagesCount = 20;
@@ -377,7 +378,7 @@ class KafkaST extends AbstractST {
      * Test sending messages over tls transport using mutual tls auth
      */
     @Test
-    @Tag("regression")
+    @Tag(REGRESSION)
     void testSendMessagesTlsAuthenticated() {
         String kafkaUser = "my-user";
         String name = "send-messages-tls-auth";
@@ -414,7 +415,7 @@ class KafkaST extends AbstractST {
      * Test sending messages over plain transport using scram sha auth
      */
     @Test
-    @Tag("regression")
+    @Tag(REGRESSION)
     void testSendMessagesPlainScramSha() {
         String kafkaUser = "my-user";
         String name = "send-messages-plain-scram-sha";
@@ -471,7 +472,7 @@ class KafkaST extends AbstractST {
      * Test sending messages over tls transport using scram sha auth
      */
     @Test
-    @Tag("regression")
+    @Tag(REGRESSION)
     void testSendMessagesTlsScramSha() {
         String kafkaUser = "my-user";
         String name = "send-messages-tls-scram-sha";
@@ -772,7 +773,7 @@ class KafkaST extends AbstractST {
     }
 
     @Test
-    @Tag("regression")
+    @Tag(REGRESSION)
     void testJvmAndResources() {
         Map<String, String> jvmOptionsXX = new HashMap<>();
         jvmOptionsXX.put("UseG1GC", "true");
@@ -848,7 +849,7 @@ class KafkaST extends AbstractST {
     }
 
     @Test
-    @Tag("regression")
+    @Tag(REGRESSION)
     void testForTopicOperator() throws InterruptedException {
 
         Map<String, Object> kafkaConfig = new HashMap<>();
@@ -944,7 +945,7 @@ class KafkaST extends AbstractST {
     }
 
     @Test
-    @Tag("regression")
+    @Tag(REGRESSION)
     void testRackAware() {
         resources().kafkaEphemeral(CLUSTER_NAME, 1)
             .editSpec()
@@ -975,7 +976,7 @@ class KafkaST extends AbstractST {
      * Test the case where the TO is configured to watch a different namespace that it is deployed in
      */
     @Test
-    @Tag("regression")
+    @Tag(REGRESSION)
     @Namespace(value = "topic-operator-namespace", use = false)
     void testWatchingOtherNamespace() throws InterruptedException {
         resources().kafkaEphemeral(CLUSTER_NAME, 1)
